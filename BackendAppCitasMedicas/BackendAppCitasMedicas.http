@@ -1,0 +1,6 @@
+@BackendAppCitasMedicas_HostAddress = http://localhost:5222
+
+GET {{BackendAppCitasMedicas_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
