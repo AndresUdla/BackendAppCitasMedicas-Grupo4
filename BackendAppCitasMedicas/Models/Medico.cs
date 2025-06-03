@@ -33,9 +33,9 @@ namespace BackendAppCitasMedicas.Models
         public Usuario? Usuario { get; set; }
 
         [ValidateNever]
-        public ICollection<Horario>? Horarios { get; set; }
+        public ICollection<Horario> Horarios { get; set; }
 
         [ValidateNever]
-        public ICollection<Cita>? Citas { get; set; }
+        public ICollection<Cita> Citas { get; set; }
     }
 }
