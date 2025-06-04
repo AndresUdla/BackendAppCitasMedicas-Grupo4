@@ -1,12 +1,13 @@
-﻿using System;
+﻿using BackendAppCitasMedicas.Data;
+using BackendAppCitasMedicas.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using BackendAppCitasMedicas.Data;
-using BackendAppCitasMedicas.Models;
 
 namespace BackendAppCitasMedicas.Controllers
 {
@@ -104,5 +105,25 @@ namespace BackendAppCitasMedicas.Controllers
         {
             return _context.Usuario.Any(e => e.UsuarioId == id);
         }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<Usuario>> Login(Models.LoginRequest request)
+        {
+            var usuario = await _context.Usuario
+                .FirstOrDefaultAsync(u => u.Correo == request.Correo && u.Contrasena == request.Contrasena);
+
+            if (usuario == null)
+            {
+                return Unauthorized("Correo o contraseña incorrectos.");
+            }
+
+            // Opcionalmente, puedes no devolver la contraseña por seguridad
+            usuario.Contrasena = null;
+
+            return Ok(usuario);
+        }
+
+
     }
+
 }
